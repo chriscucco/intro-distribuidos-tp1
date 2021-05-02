@@ -1,20 +1,20 @@
 import sys
 
-class ServerParamValidations():
+class Params():
     def initializeParams():
         return '', '', '', False, False, False
     
-    def processParams(host, port, storagePath): 
+    def processParams(host, port, sPath): 
         if host == '':
             host = '127.0.0.1'
         if port == '':
             port = '8080'
-        if storagePath == '':
-            storagePath = '/lib'
-        return host, port, storagePath
+        if sPath == '':
+            sPath = '/lib'
+        return host, port, sPath
 
     def validateParams():
-        host, port, storagePath, verboseParam, quietParam, helpParam = ServerParamValidations.initializeParams()
+        host, port, sPath, verboseParam, quietParam, helpParam = Params.initializeParams()
         i = 0
         while i < len(sys.argv):
             if sys.argv[i] == '-h' or sys.argv[i] == '--help':
@@ -33,8 +33,8 @@ class ServerParamValidations():
                     i += 1
             elif sys.argv[i] == '-s' or sys.argv[i] == '--storage':
                 if len(sys.argv) > i+1:
-                    storagePath = sys.argv[i+1]
+                    sPath = sys.argv[i+1]
                     i += 1
             i+= 1
-        host, port, storagePath = ServerParamValidations.processParams(host, port, storagePath)
-        return host, port, storagePath, verboseParam, quietParam, helpParam
+        host, port, sPath = Params.processParams(host, port, sPath)
+        return host, port, sPath, verboseParam, quietParam, helpParam

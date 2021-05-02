@@ -1,12 +1,14 @@
-from lib.serverParamsValidation import *
+from lib.serverParamsValidation import Params
+
 
 def main():
-    host, port, storagePath, verboseParam, quietParam, helpParam = ServerParamValidations.validateParams()
+    host, port, sPath, verbose, quiet, helpParam = Params.validateParams()
     if helpParam:
         return printHelp()
 
+
 def printHelp():
-    print('usage: start-server [-h] [-v | -q] [-H ADDR] [-p PORT] [-s DIRPATH]')
+    print('usage: start-server [-h] [-v|-q] [-H ADDR] [-p PORT] [-s DIRPATH]')
     print('')
     print('<command description>')
     print('')
@@ -17,6 +19,7 @@ def printHelp():
     print('-H, --host       service IP address')
     print('-p, --port       service port')
     print('-s, --storage    storage dir path')
+
 
 if __name__ == "__main__":
     main()
