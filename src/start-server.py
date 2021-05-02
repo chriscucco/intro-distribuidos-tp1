@@ -1,4 +1,4 @@
-from lib.serverParamsValidation import Params
+from lib.paramsValidation import Params
 
 
 def main():
