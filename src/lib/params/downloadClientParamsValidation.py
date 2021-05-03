@@ -23,7 +23,7 @@ class DownloadClientParams(Params):
                     i += 1
             i += 1
         if fName == '':
-            fName = 'test'
+            fName = 'test.txt'
         if fDest == '':
-            fDest = '/lib'
+            fDest = './'
         return fName, fDest

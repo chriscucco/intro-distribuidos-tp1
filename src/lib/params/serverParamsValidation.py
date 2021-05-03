@@ -18,5 +18,5 @@ class ServerParams(Params):
                     i += 1
             i += 1
         if sPath == '':
-            sPath = '/lib'
+            sPath = './'
         return sPath

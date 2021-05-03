@@ -32,4 +32,6 @@ class Params():
                     i += 1
             i += 1
         host, port = Params.processParams(host, port)
+        if verboseParam:
+            quietParam = False
         return host, port, verboseParam, quietParam, helpParam
