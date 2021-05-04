@@ -7,7 +7,7 @@ class ServerDownload:
     def download(s, sPath, addr, verbose, quiet):
         data = s.recv(Constants.bytesChunk())
         fileName = data.decode()
-        Logger.logIfVerbose(verbose, "Client "+addr+" downloading: "+fileName)
+        Logger.logIfVerbose(verbose, "Client "+str(addr)+" downloading: "+fileName)
         try:
             f = open(sPath+fileName, "rb")
         except Exception:
@@ -15,10 +15,10 @@ class ServerDownload:
             s.send("ERROR".encode())
             s.close()
             return
-        Logger.logIfVerbose(verbose, "Client "+addr+" file opened.")
+        Logger.logIfVerbose(verbose, "Client "+str(addr)+" file opened.")
         s.send("OK".encode())
         FileTransfer.sendFileSize(s, f, verbose, quiet)
-        Logger.logIfVerbose(verbose, "Client "+addr+" sending file...")
+        Logger.logIfVerbose(verbose, "Client "+str(addr)+" sending file...")
         FileTransfer.sendFile(s, f, Constants.bytesChunk(), verbose, quiet)
         Logger.log("Client "+str(addr)+" finished")
         f.close()

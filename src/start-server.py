@@ -22,7 +22,7 @@ def main():
     Logger.logIfNotQuiet(quiet, "Server socket listening conections")
     while True:
         c, addr = serverSocket.accept()
-        Logger.log('Client connected from ', addr)
+        Logger.log('Client connected from ' + str(addr))
         t = Thread(target=connection, args=(c, sPath, addr, verbose, quiet))
         t.start()
     serverSocket.close()

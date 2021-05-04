@@ -8,7 +8,7 @@ class FileTransfer:
             chunk = f.read(chunkSize)
             if not chunk:
                 break
-            s.send(chunk.encode())
+            s.send(chunk)
 
     def sendFileSize(s, f, verbose, quiet):
         f.seek(0, os.SEEK_END)
@@ -23,8 +23,8 @@ class FileTransfer:
                 data = s.recv(chunkSize)
                 bytesRecieved += len(data)
                 f.write(data)
-            s.send("OK")
+            s.send("OK".encode())
         except Exception:
             Logger.log("Failed saving file " + name)
-            s.send("ERROR")
+            s.send("ERROR".encode())
             return
