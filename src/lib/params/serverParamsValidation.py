@@ -1,11 +1,13 @@
 import sys
 from lib.params.paramsValidation import Params
+from lib.logger.logger import Logger
 
 
 class ServerParams(Params):
     def validate():
         host, port, verbose, quiet, helpParam = Params.validate()
         sPath = ServerParams.getStoragePath()
+        Logger.logIfVerbose(verbose, "Params parsed")
         return host, port, sPath, verbose, quiet, helpParam
 
     def getStoragePath():

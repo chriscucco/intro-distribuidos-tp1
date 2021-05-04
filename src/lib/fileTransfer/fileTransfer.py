@@ -1,4 +1,5 @@
 import os
+from lib.logger.logger import Logger
 
 
 class FileTransfer:
@@ -15,7 +16,7 @@ class FileTransfer:
         f.seek(0, os.SEEK_SET)
         s.send(str(size).encode())
 
-    def recieveFile(s, f, fileSize, chunkSize, verbose, quiet):
+    def recieveFile(s, f, name, fileSize, chunkSize, verbose, quiet):
         try:
             bytesRecieved = 0
             while bytesRecieved < fileSize:
@@ -24,5 +25,6 @@ class FileTransfer:
                 f.write(data)
             s.send("OK")
         except Exception:
+            Logger.log("Failed saving file " + name)
             s.send("ERROR")
             return

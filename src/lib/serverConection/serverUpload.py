@@ -1,14 +1,17 @@
 from lib.constants import Constants
 from lib.fileTransfer.fileTransfer import FileTransfer
+from lib.logger.logger import Logger
 
 
 class ServerUpload:
-    def upload(s, sPath, verbose, quiet):
+    def upload(s, sPath, addr, verbose, quiet):
         data = s.recv(Constants.bytesChunk())
-        fileName = data.decode()
+        name = data.decode()
+        Logger.logIfVerbose(verbose, "Client "+addr+" uploading: "+name)
         try:
-            f = open(sPath+fileName, "wb")
+            f = open(sPath+name, "wb")
         except Exception:
+            Logger.log("Client "+str(addr)+" error opening file"+name)
             s.send("ERROR".encode())
             s.close()
             return
@@ -17,12 +20,17 @@ class ServerUpload:
         try:
             size = int(data.decode())
         except Exception:
+            strSize = data.decode()
+            Logger.log("Client "+str(addr)+" invalid file size "+strSize)
             s.send("ERROR".encode())
             s.close()
             return
         s.send("OK".encode())
+        Logger.logIfVerbose(verbose, "Client "+addr+" file size: "+str(size))
         chunkSize = Constants.bytesChunk()
-        FileTransfer.recieveFile(s, f, size, chunkSize, verbose, quiet)
+        Logger.logIfVerbose(verbose, "Client "+addr+" getting file...")
+        FileTransfer.recieveFile(s, f, name, size, chunkSize, verbose, quiet)
+        Logger.log("Client "+str(addr)+" finished")
         f.close()
         s.close()
         return
