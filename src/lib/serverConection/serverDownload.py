@@ -12,6 +12,7 @@ class ServerDownload:
             s.send("ERROR".encode())
             s.close()
             return
+        s.send("OK".encode())
         FileTransfer.sendFileSize(s, f, verbose, quiet)
         FileTransfer.sendFile(s, f, Constants.bytesChunk(), verbose, quiet)
         f.close()
