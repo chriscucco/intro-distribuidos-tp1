@@ -7,11 +7,14 @@ class ServerDownload:
     def download(s, sPath, addr, verbose, quiet):
         data = s.recv(Constants.bytesChunk())
         fileName = data.decode()
-        Logger.logIfVerbose(verbose, "Client "+str(addr)+" downloading: "+fileName)
+        Logger.logIfVerbose(verbose, "Client " + str(addr) +
+                            " downloading: " + sPath + fileName)
+        fPath = sPath+fileName
         try:
-            f = open(sPath+fileName, "rb")
+            f = open(fPath, "rb")
         except Exception:
-            Logger.log("Client "+str(addr)+" error opening file"+fileName)
+            Logger.log("Client " + str(addr) +
+                       " error opening file: "+sPath+fileName)
             s.send("ERROR".encode())
             s.close()
             return
