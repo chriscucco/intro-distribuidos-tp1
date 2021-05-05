@@ -1,11 +1,13 @@
 import sys
 from lib.params.paramsValidation import Params
+from lib.logger.logger import Logger
 
 
 class UploadClientParams(Params):
     def validate():
         host, port, verbose, quiet, helpParam = Params.validate()
         fName, fSourcePath = UploadClientParams.getSourcePathAndFilename()
+        Logger.logIfVerbose(verbose, "Params parsed")
         return host, port, fName, fSourcePath, verbose, quiet, helpParam
 
     def getSourcePathAndFilename():
@@ -23,7 +25,7 @@ class UploadClientParams(Params):
                     i += 1
             i += 1
         if fName == '':
-            fName = 'test'
+            fName = 'test.txt'
         if fSourcePath == '':
-            fSourcePath = 'lib/'
+            fSourcePath = './'
         return fName, fSourcePath

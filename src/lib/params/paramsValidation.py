@@ -9,7 +9,7 @@ class Params():
         if host == '':
             host = '127.0.0.1'
         if port == '':
-            port = '8080'
+            port = 8080
         return host, port
 
     def validate():
@@ -28,8 +28,10 @@ class Params():
                     i += 1
             elif sys.argv[i] == '-p' or sys.argv[i] == '--port':
                 if len(sys.argv) > i+1:
-                    port = sys.argv[i+1]
+                    port = int(sys.argv[i+1])
                     i += 1
             i += 1
         host, port = Params.processParams(host, port)
+        if verboseParam:
+            quietParam = False
         return host, port, verboseParam, quietParam, helpParam

@@ -1,29 +1,29 @@
-import os
 import socket
-
 from lib.params.uploadClientParamsValidation import UploadClientParams
+from lib.logger.logger import Logger
+from lib.clientConnection.clientUpload import ClientUpload
 
 
 def main():
     host, port, fName, fSource, verb, quiet, h = UploadClientParams.validate()
+
     if h:
         return printHelp()
 
+    # Se inicializa cliente
+    sckt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
     try:
-        file = open(fSource + fName, "rb")
-        file.seek(0, os.SEEK_END)
-        file_size = file.tell()
-        file.seek(0, os.SEEK_SET)
-
-        # Se inicializa cliente
-        sckt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sckt.connect((host, port))
+    except Exception:
+        Logger.log("Error connecting socket.")
+        return
 
-        # Se cierra archivo y socket
-        file.close()
-        sckt.close()
-    except OSError:
-        print("El archivo a enviar no existe")
+    clientUpload = ClientUpload()
+    clientUpload.upload(sckt, fSource, fName, verb, quiet)
+
+    # Se cierra cliente
+    sckt.close()
 
 
 def printHelp():

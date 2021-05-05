@@ -1,11 +1,13 @@
 import sys
 from lib.params.paramsValidation import Params
+from lib.logger.logger import Logger
 
 
 class DownloadClientParams(Params):
     def validate():
         host, port, verbose, quiet, helpParam = Params.validate()
         fName, fDest = DownloadClientParams.getDestinationPathAndFilename()
+        Logger.logIfVerbose(verbose, "Params parsed")
         return host, port, fName, fDest, verbose, quiet, helpParam
 
     def getDestinationPathAndFilename():
@@ -23,7 +25,7 @@ class DownloadClientParams(Params):
                     i += 1
             i += 1
         if fName == '':
-            fName = 'test'
+            fName = 'test.txt'
         if fDest == '':
-            fDest = 'lib/'
+            fDest = './'
         return fName, fDest
