@@ -1,8 +1,8 @@
-from lib.serverParamsValidation import Params
+from lib.params.serverParamsValidation import ServerParams
 
 
 def main():
-    host, port, sPath, verbose, quiet, helpParam = Params.validateParams()
+    host, port, sPath, verbose, quiet, helpParam = ServerParams.validate()
     if helpParam:
         return printHelp()
 

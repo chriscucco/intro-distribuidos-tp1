@@ -1,20 +1,19 @@
 import sys
 
+
 class Params():
-    def initializeParams():
-        return '', '', '', False, False, False
-    
-    def processParams(host, port, sPath): 
+    def initialize():
+        return '', '', False, False, False
+
+    def processParams(host, port):
         if host == '':
             host = '127.0.0.1'
         if port == '':
             port = '8080'
-        if sPath == '':
-            sPath = '/lib'
-        return host, port, sPath
+        return host, port
 
-    def validateParams():
-        host, port, sPath, verboseParam, quietParam, helpParam = Params.initializeParams()
+    def validate():
+        host, port, verboseParam, quietParam, helpParam = Params.initialize()
         i = 0
         while i < len(sys.argv):
             if sys.argv[i] == '-h' or sys.argv[i] == '--help':
@@ -31,10 +30,6 @@ class Params():
                 if len(sys.argv) > i+1:
                     port = sys.argv[i+1]
                     i += 1
-            elif sys.argv[i] == '-s' or sys.argv[i] == '--storage':
-                if len(sys.argv) > i+1:
-                    sPath = sys.argv[i+1]
-                    i += 1
-            i+= 1
-        host, port, sPath = Params.processParams(host, port, sPath)
-        return host, port, sPath, verboseParam, quietParam, helpParam
+            i += 1
+        host, port = Params.processParams(host, port)
+        return host, port, verboseParam, quietParam, helpParam
