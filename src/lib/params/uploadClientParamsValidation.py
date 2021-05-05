@@ -25,5 +25,5 @@ class UploadClientParams(Params):
         if fName == '':
             fName = 'test'
         if fSourcePath == '':
-            fSourcePath = '/lib'
+            fSourcePath = 'lib/'
         return fName, fSourcePath
