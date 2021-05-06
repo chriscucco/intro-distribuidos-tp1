@@ -21,7 +21,7 @@ class FileTransfer:
     def recieveFile(s, f, name, fileSize, chunkSize, verbose, quiet):
         try:
             bytesRecieved = 0
-            while bytesRecieved < fileSize:
+            while bytesRecieved < int(fileSize):
                 data = s.recv(chunkSize)
                 bytesRecieved += len(data)
                 f.write(data)
