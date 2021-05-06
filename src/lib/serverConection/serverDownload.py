@@ -9,9 +9,8 @@ class ServerDownload:
         fileName = data.decode()
         Logger.logIfVerbose(verbose, "Client " + str(addr) +
                             " downloading: " + sPath + fileName)
-        fPath = sPath+fileName
         try:
-            f = open(fPath, "rb")
+            f = open(sPath+fileName, "rb")
         except Exception:
             Logger.log("Client " + str(addr) +
                        " error opening file: "+sPath+fileName)
