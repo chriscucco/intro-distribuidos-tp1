@@ -3,8 +3,7 @@ from lib.logger.logger import Logger
 
 
 class FileTransfer:
-    # sacar parametros verbose y quite si no se van a usar
-    def sendFile(s, f, chunkSize, verbose, quiet):
+    def sendFile(s, f, chunkSize):
         chunk = f.read(chunkSize)
         while True:
             s.send(chunk)
@@ -15,6 +14,8 @@ class FileTransfer:
     def sendFileSize(s, f, verbose, quiet):
         f.seek(0, os.SEEK_END)
         size = f.tell()
+        Logger.logIfNotQuiet(quiet, "Size of file to send: " +
+                             str(size))
         f.seek(0, os.SEEK_SET)
         s.send(str(size).encode())
 
@@ -25,8 +26,11 @@ class FileTransfer:
                 data = s.recv(chunkSize)
                 bytesRecieved += len(data)
                 f.write(data)
+
+            Logger.logIfVerbose(verbose, "Sending OK code")
             s.send("OK".encode())
         except Exception:
             Logger.log("Failed saving file " + name)
+            Logger.logIfVerbose(verbose, "Sending ERROR code")
             s.send("ERROR".encode())
             return

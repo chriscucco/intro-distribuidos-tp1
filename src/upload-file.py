@@ -10,8 +10,15 @@ def main():
     if h:
         return printHelp()
 
+    try:
+        file = open(fSource + fName, "rb")
+    except OSError:
+        Logger.log("Error opening file " + fSource + fName)
+        return
+
     # Se inicializa cliente
     sckt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    Logger.logIfVerbose(verb, "Creating socket...")
 
     try:
         sckt.connect((host, port))
@@ -19,11 +26,15 @@ def main():
         Logger.log("Error connecting socket.")
         return
 
+    Logger.log("Client connected with host: " + str(host) + " and port: "
+               + str(port))
     clientUpload = ClientUpload()
-    clientUpload.upload(sckt, fSource, fName, verb, quiet)
+
+    clientUpload.upload(sckt, file, fName, verb, quiet)
 
     # Se cierra cliente
     sckt.close()
+    Logger.log("Client closed")
 
 
 def printHelp():
