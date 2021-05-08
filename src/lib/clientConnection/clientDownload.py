@@ -41,7 +41,7 @@ class ClientDownload:
         except OSError:
             Logger.log("Client could not create the file on: " + fDest + fName)
         FileTransfer.recieveFile(downloadSocket, file, fName, size,
-                                     Constants.bytesChunk(), verb, quiet)
+                                 Constants.bytesChunk(), verb, quiet)
         Logger.log("File downloaded successfully in: " + fDest + fName)
 
         file.close()

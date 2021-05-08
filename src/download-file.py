@@ -1,6 +1,4 @@
 from lib.params.downloadClientParamsValidation import DownloadClientParams
-from lib.constants import Constants
-from lib.fileTransfer.fileTransfer import FileTransfer
 from lib.logger.logger import Logger
 from lib.clientConnection.clientDownload import ClientDownload
 import socket
@@ -23,11 +21,8 @@ def main():
     Logger.log("Client connected with host: " + str(host) + " and port: "
                + str(port))
 
-    #### LO NUEVO
     clientDownload = ClientDownload()
-
     clientDownload.download(downloadSocket, fName, fDest, verb, quiet)
-    ##### LO NUEVO
 
     downloadSocket.close()
     Logger.log("Client closed")

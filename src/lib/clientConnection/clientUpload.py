@@ -2,6 +2,7 @@ from lib.constants import Constants
 from lib.fileTransfer.fileTransfer import FileTransfer
 from lib.logger.logger import Logger
 
+
 class ClientUpload:
 
     def __validateConfirmation(self, file, confirmation, errorMsge):
