@@ -27,7 +27,7 @@ class FileTransfer:
                 bytesRecieved += len(data)
                 f.write(data)
 
-            Logger.logIfVerbose(verbose, "Sending OK code")
+            # Logger.logIfVerbose(verbose, "Sending OK code")
             s.send("OK".encode())
         except Exception:
             Logger.log("Failed saving file " + name)
