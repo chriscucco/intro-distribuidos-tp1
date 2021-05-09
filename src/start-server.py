@@ -28,18 +28,38 @@ def main():
     serverSocket.listen(MAX_CONNECTIONS)
     Logger.logIfNotQuiet(quiet, "Server socket listening conections")
 
-    while True:
-        c, addr = serverSocket.accept()
-        Logger.log('Client connected from ' + str(addr))
-        t = Thread(target=connection, args=(c, sPath, addr, verbose, quiet))
-        t.start()
+    waitConnectionsThread = Thread(target=waitConnections, args=(serverSocket, sPath, verbose, quiet))
+    waitConnectionsThread.start()
 
+    serverOn = True
+    while serverOn:
+        value = input()
+        if value == 'exit':
+            serverOn = False
+    
     serverSocket.close()
+    waitConnectionsThread.join()
+    Logger.log('Server closed')
 
 
 def connection(c, sPath, addr, verbose, quiet):
     ServerConection.new_client_connected(c, sPath, addr, verbose, quiet)
 
+
+def waitConnections(serverSocket, sPath, verbose, quiet):
+    activeThreads = [] 
+    try:        
+        while True:
+            c, addr = serverSocket.accept()
+            Logger.log('Client connected from ' + str(addr))
+            t = Thread(target=connection, args=(c, sPath, addr, verbose, quiet))
+            activeThreads.append(t)
+            t.start()
+    except Exception:
+        Logger.logIfVerbose(verbose, 'Closing server...')
+        for pos, thread in enumerate(activeThreads):
+            Logger.logIfVerbose(verbose, 'Joining thread #' + str(pos+1))
+            thread.join()
 
 def printHelp():
     print('usage: start-server [-h] [-v|-q] [-H ADDR] [-p PORT] [-s DIRPATH]')
