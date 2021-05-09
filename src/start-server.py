@@ -15,44 +15,44 @@ def main():
 
     Logger.log("Server started in host: " + host + " and port: " + str(port))
 
-    serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    srvSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     Logger.logIfNotQuiet(quiet, "Server socket successfully created")
 
     try:
-        serverSocket.bind((host, port))
+        srvSock.bind((host, port))
         Logger.logIfVerbose(verbose, "Server socket binded")
     except socket.error:
         Logger.log("Error binding socket")
         return
 
-    serverSocket.listen(MAX_CONNECTIONS)
+    srvSock.listen(MAX_CONNECTIONS)
     Logger.logIfNotQuiet(quiet, "Server socket listening conections")
 
-    waitConnectionsThread = Thread(target=waitConnections, args=(serverSocket, sPath, verbose, quiet))
-    waitConnectionsThread.start()
+    t = Thread(target=waitConnections, args=(srvSock, sPath, verbose, quiet))
+    t.start()
 
     serverOn = True
     while serverOn:
         value = input()
         if value == 'exit':
             serverOn = False
-    
-    serverSocket.close()
-    waitConnectionsThread.join()
+
+    srvSock.close()
+    t.join()
     Logger.log('Server closed')
 
 
-def connection(c, sPath, addr, verbose, quiet):
+def connect(c, sPath, addr, verbose, quiet):
     ServerConection.new_client_connected(c, sPath, addr, verbose, quiet)
 
 
 def waitConnections(serverSocket, sPath, verbose, quiet):
-    activeThreads = [] 
-    try:        
+    activeThreads = []
+    try:
         while True:
             c, addr = serverSocket.accept()
             Logger.log('Client connected from ' + str(addr))
-            t = Thread(target=connection, args=(c, sPath, addr, verbose, quiet))
+            t = Thread(target=connect, args=(c, sPath, addr, verbose, quiet))
             activeThreads.append(t)
             t.start()
     except Exception:
@@ -60,6 +60,7 @@ def waitConnections(serverSocket, sPath, verbose, quiet):
         for pos, thread in enumerate(activeThreads):
             Logger.logIfVerbose(verbose, 'Joining thread #' + str(pos+1))
             thread.join()
+
 
 def printHelp():
     print('usage: start-server [-h] [-v|-q] [-H ADDR] [-p PORT] [-s DIRPATH]')
