@@ -11,7 +11,7 @@ def main():
         return printHelp()
 
     try:
-        Logger.logIfVerbose(verbose, 'Opening file: ' + fName)
+        Logger.logIfVerbose(verb, 'Opening file: ' + fName)
         file = open(fSource + fName, "rb")
     except OSError:
         Logger.log("Error opening file " + fSource + fName)
