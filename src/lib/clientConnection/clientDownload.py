@@ -33,7 +33,7 @@ class ClientDownload:
             size = downloadSocket.recv(Constants.bytesChunk()).decode()
             int(size)
         except Exception:
-            Logger.log("Invalid file size " + size)
+            Logger.log("Invalid file size")
             return
 
         try:

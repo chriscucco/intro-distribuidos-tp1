@@ -4,12 +4,11 @@ from lib.logger.logger import Logger
 
 class FileTransfer:
     def sendFile(s, f, chunkSize):
-        chunk = f.read(chunkSize)
         while True:
-            s.send(chunk)
             chunk = f.read(chunkSize)
             if not chunk:
                 break
+            s.send(chunk)
 
     def sendFileSize(s, f, verbose, quiet):
         f.seek(0, os.SEEK_END)
