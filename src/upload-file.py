@@ -39,7 +39,7 @@ def main():
 
 
 def printHelp():
-    print('usage: file-upload [-h] [-v|-q] [-H ADDR] [-p PORT]')
+    print('usage: upload-file.py [-h] [-v|-q] [-H ADDR] [-p PORT]')
     print('[-s FILEPATH] [-n FILENAME]')
     print('')
     print('<command description>')

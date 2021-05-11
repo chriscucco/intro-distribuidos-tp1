@@ -63,7 +63,7 @@ def waitConnections(serverSocket, sPath, verbose, quiet):
 
 
 def printHelp():
-    print('usage: start-server [-h] [-v|-q] [-H ADDR] [-p PORT] [-s DIRPATH]')
+    print('usage: start-server.py [-h] [-v|-q] [-H ADDR] [-p PORT] [-s DIRPATH]')
     print('')
     print('<command description>')
     print('')

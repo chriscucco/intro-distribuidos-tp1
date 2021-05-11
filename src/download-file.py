@@ -30,7 +30,7 @@ def main():
 
 
 def printHelp():
-    print('usage: file-download [-h] [-v | -q] [-H ADDR] [-p PORT]')
+    print('usage: download-file.py [-h] [-v | -q] [-H ADDR] [-p PORT]')
     print('[-d FILEPATH] [-n FILENAME]')
     print('')
     print('<command description>')
