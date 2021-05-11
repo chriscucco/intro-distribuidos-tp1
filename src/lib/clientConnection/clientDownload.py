@@ -21,7 +21,7 @@ class ClientDownload:
 
         # Filename validation:
         data = downloadSocket.recv(Constants.bytesChunk())
-        if data.decode() == 'OK':
+        if data == 'OK':
             Logger.logIfVerbose(verb, "Server found the file")
         elif data.decode() == 'ERROR':
             Logger.log("The file does not exist on the server")
